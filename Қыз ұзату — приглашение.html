@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Қыз ұзату — Ақеркенің қыз ұзату тойы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --wine: #4a0b19;
+      --wine-deep: #2a050e;
+      --wine-soft: #6b1427;
+      --gold: #d4af5f;
+      --gold-soft: #ecd9a4;
+      --cream: #f8efe0;
+      color-scheme: dark;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 64px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--wine-deep);
+      color: var(--cream);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 20px;
+      line-height: 1.55;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.locked {
+      overflow: hidden;
+    }
+
+    .serif {
+      font-family: "Playfair Display", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .cover {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(ellipse at center, var(--wine-soft), var(--wine-deep) 75%);
+      transition: opacity 0.9s ease, visibility 0.9s ease;
+    }
+
+    .cover.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .cover-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 54px 24px;
+      border: 1px solid var(--gold);
+      outline: 1px solid rgba(212, 175, 95, 0.35);
+      outline-offset: 7px;
+    }
+
+    .cover h1 {
+      font-size: clamp(46px, 14vw, 68px);
+      line-height: 1.05;
+      margin: 8px 0 18px;
+      color: var(--gold);
+    }
+
+    .cover p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--gold);
+      margin: 0 0 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 26px;
+      padding: 14px 32px;
+      border: 1px solid var(--gold);
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+      color: var(--wine-deep);
+      font: 600 14px "Cormorant Garamond", Georgia, serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--gold-soft);
+    }
+
+    nav {
+      position: fixed;
+      top: env(safe-area-inset-top, 0px);
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 8px;
+      background: rgba(42, 5, 14, 0.82);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(212, 175, 95, 0.3);
+      overflow-x: auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto;
+      height: env(safe-area-inset-top, 0px);
+      background: rgba(42, 5, 14, 0.9);
+      z-index: 19;
+    }
+
+    nav a {
+      padding: 4px 12px;
+      color: var(--gold-soft);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    section {
+      position: relative;
+      padding: 88px 22px;
+      overflow: hidden;
+    }
+
+    section:nth-of-type(even) {
+      background: linear-gradient(180deg, var(--wine), var(--wine-deep));
+    }
+
+    section:nth-of-type(odd) {
+      background: linear-gradient(180deg, var(--wine-deep), var(--wine));
+    }
+
+    .wrap {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: clamp(34px, 9vw, 46px);
+      line-height: 1.15;
+      color: var(--gold);
+      margin: 0 0 8px;
+    }
+
+    .divider {
+      display: block;
+      margin: 20px auto;
+      width: 190px;
+      height: 24px;
+    }
+
+    .text {
+      max-width: 420px;
+      margin: 16px auto 0;
+      color: #f0e2cb;
+    }
+
+    #home {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-top: 110px;
+    }
+
+    #home .big {
+      font-size: clamp(50px, 16vw, 84px);
+      line-height: 1.05;
+      color: var(--gold);
+      margin: 6px 0 0;
+    }
+
+    .name {
+      font-size: clamp(42px, 13vw, 64px);
+      color: var(--gold-soft);
+      line-height: 1.15;
+      margin: 4px 0;
+      text-shadow: 0 2px 20px rgba(212, 175, 95, 0.3);
+    }
+
+    .lead {
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .scroll {
+      margin-top: 34px;
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .scroll::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 38px;
+      margin: 10px auto 0;
+      background: var(--gold);
+      animation: drop 1.8s ease-in-out infinite;
+    }
+
+    @keyframes drop {
+
+      0%,
+      100% {
+        transform: scaleY(0.3);
+        opacity: 0.4;
+        transform-origin: top;
+      }
+
+      50% {
+        transform: scaleY(1);
+        opacity: 1;
+        transform-origin: top;
+      }
+    }
+
+    .frame {
+      padding: 46px 22px;
+      border: 1px solid var(--gold);
+      outline: 1px solid rgba(212, 175, 95, 0.3);
+      outline-offset: 6px;
+      background: rgba(0, 0, 0, 0.14);
+    }
+
+    .count {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .count div {
+      border: 1px solid rgba(212, 175, 95, 0.5);
+      padding: 14px 4px 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .count b {
+      display: block;
+      font: 400 32px "Playfair Display", Georgia, serif;
+      color: var(--gold-soft);
+    }
+
+    .count small {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .cal {
+      margin: 26px auto 0;
+      max-width: 340px;
+      border: 1px solid rgba(212, 175, 95, 0.5);
+      padding: 18px 14px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .cal-head {
+      font: italic 400 26px "Playfair Display", Georgia, serif;
+      color: var(--gold-soft);
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      font-size: 18px;
+    }
+
+    .grid span {
+      padding: 6px 0;
+    }
+
+    .grid .dow {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .grid .day {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--cream);
+    }
+
+    .grid .day.on {
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+      color: var(--wine-deep);
+      font-weight: 600;
+      box-shadow: 0 0 0 4px rgba(212, 175, 95, 0.25);
+    }
+
+    .time-big {
+      margin-top: 28px;
+      font: 400 clamp(52px, 15vw, 72px) "Playfair Display", Georgia, serif;
+      color: var(--gold-soft);
+      line-height: 1;
+    }
+
+    .place {
+      font-size: 24px;
+      margin: 6px 0 0;
+    }
+
+    .place strong {
+      display: block;
+      font: italic 400 clamp(30px, 8vw, 38px) "Playfair Display", Georgia, serif;
+      color: var(--gold-soft);
+      margin: 4px 0;
+    }
+
+    .hosts {
+      font-size: clamp(34px, 10vw, 46px);
+      color: var(--gold-soft);
+    }
+
+    form {
+      margin-top: 24px;
+      text-align: left;
+    }
+
+    label.opt {
+      display: block;
+      margin-bottom: 10px;
+      padding: 13px 16px;
+      border: 1px solid rgba(212, 175, 95, 0.5);
+      background: rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    label.opt:has(input:checked) {
+      border-color: var(--gold);
+      background: rgba(212, 175, 95, 0.16);
+    }
+
+    label.opt input {
+      accent-color: var(--gold);
+      margin-right: 10px;
+    }
+
+    .field {
+      display: block;
+      margin: 16px 0 6px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid rgba(212, 175, 95, 0.6);
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--cream);
+      font: 20px "Cormorant Garamond", Georgia, serif;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: 2px solid var(--gold);
+      outline-offset: 1px;
+    }
+
+    select option {
+      color: #222;
+    }
+
+    form .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .thanks {
+      display: none;
+      margin-top: 24px;
+      padding: 26px 18px;
+      border: 1px solid var(--gold);
+    }
+
+    .thanks.show {
+      display: block;
+    }
+
+    .footer {
+      padding: 36px 20px 60px;
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      background: var(--wine-deep);
+    }
+
+    .dust {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .dust i {
+      position: absolute;
+      bottom: -10px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: rise linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(-105svh);
+        opacity: 0;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .dust,
+      .scroll::after {
+        display: none;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+
+<body class="locked">
+
+  <div class="cover" id="cover">
+    <div class="cover-box">
+      <p class="eyebrow">Шақыру</p>
+      <h1 class="serif">Қыз ұзату</h1>
+      <svg class="divider" viewBox="0 0 190 24" fill="none" stroke="#d4af5f" stroke-width="1.2">
+        <line x1="0" y1="12" x2="73" y2="12" />
+        <circle cx="87" cy="12" r="8" />
+        <circle cx="103" cy="12" r="8" />
+        <line x1="117" y1="12" x2="190" y2="12" />
+      </svg>
+      <p class="lead">Ақеркенің қыз ұзату тойы</p>
+      <button class="btn" id="open" type="button">Шақыруды ашу</button>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#home">Басты</a>
+    <a href="#invite">Шақыру</a>
+    <a href="#date">Күні</a>
+    <a href="#place">Мекен-жай</a>
+    <a href="#rsvp">Растау</a>
+  </nav>
+
+  <section id="home">
+    <div class="dust" id="dust"></div>
+    <div class="wrap reveal">
+      <p class="eyebrow">Той шақыру</p>
+      <h1 class="serif big">Қыз ұзату</h1>
+      <svg class="divider" viewBox="0 0 190 24" fill="none" stroke="#d4af5f" stroke-width="1.2">
+        <line x1="0" y1="12" x2="73" y2="12" />
+        <circle cx="87" cy="12" r="8" />
+        <circle cx="103" cy="12" r="8" />
+        <line x1="117" y1="12" x2="190" y2="12" />
+      </svg>
+      <p class="lead">Аяулы қызымыз</p>
+      <div class="serif name">Ақеркенің</div>
+      <p class="lead">24 желтоқсан 2026</p>
+      <div class="scroll">төмен</div>
+    </div>
+  </section>
+
+  <section id="invite">
+    <div class="wrap reveal">
+      <div class="frame">
+        <p class="eyebrow">Құрметті қонақтар</p>
+        <h2 class="serif">Шақыру</h2>
+        <p class="text">Құрметті қонақтар! Сіздерді аяулы қызымыз</p>
+        <div class="serif name">Ақеркенің</div>
+        <p class="text">ұзату тойына арналған ақ дастарханымыздың қадірлі қонағы болуға шақырамыз!</p>
+        <svg class="divider" viewBox="0 0 190 24" fill="none" stroke="#d4af5f" stroke-width="1.2">
+          <line x1="0" y1="12" x2="73" y2="12" />
+          <circle cx="87" cy="12" r="8" />
+          <circle cx="103" cy="12" r="8" />
+          <line x1="117" y1="12" x2="190" y2="12" />
+        </svg>
+        <p class="eyebrow">Той иелері</p>
+        <div class="serif hosts">Нұрмахан &amp; Майра</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="date">
+    <div class="wrap reveal">
+      <p class="eyebrow">Той салтанаты</p>
+      <h2 class="serif">24 желтоқсан</h2>
+      <div class="cal">
+        <div class="cal-head">Желтоқсан 2026</div>
+        <div class="grid" id="grid"></div>
+      </div>
+      <p class="eyebrow" style="margin-top:34px">Басталу уақыты</p>
+      <div class="time-big">17:00</div>
+      <div class="count">
+        <div><b id="d">0</b><small>күн</small></div>
+        <div><b id="h">0</b><small>сағат</small></div>
+        <div><b id="m">0</b><small>минут</small></div>
+        <div><b id="s">0</b><small>секунд</small></div>
+      </div>
+      <a class="btn ghost" target="_blank" rel="noopener"
+        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D2%9A%D1%8B%D0%B7+%D2%B1%D0%B7%D0%B0%D1%82%D1%83&dates=20261224T120000Z/20261224T160000Z&location=%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82%2C+%D0%9C%D1%83%D1%85%D0%B0%D0%B1%D0%B1%D0%B0%D1%82+%D0%BA%D3%A9%D1%88%D0%BE%D0%BD%D0%B0%D1%81%D0%B8">Күнтізбеге
+        қосу</a>
+    </div>
+  </section>
+
+  <section id="place">
+    <div class="wrap reveal">
+      <p class="eyebrow">Мекен-жайымыз</p>
+      <h2 class="serif">Той өтетін жер</h2>
+      <svg class="divider" viewBox="0 0 190 24" fill="none" stroke="#d4af5f" stroke-width="1.2">
+        <line x1="0" y1="12" x2="73" y2="12" />
+        <circle cx="87" cy="12" r="8" />
+        <circle cx="103" cy="12" r="8" />
+        <line x1="117" y1="12" x2="190" y2="12" />
+      </svg>
+      <p class="place">Ташкент қаласы
+        <strong>“Мухаббат көшонаси”</strong>
+        ресторани
+      </p>
+      <a class="btn" target="_blank" rel="noopener"
+        href="https://www.google.com/maps/search/?api=1&query=%D0%9C%D1%83%D1%85%D0%B0%D0%B1%D0%B1%D0%B0%D1%82+%D0%BA%D3%A9%D1%88%D0%BE%D0%BD%D0%B0%D1%81%D0%B8+%D0%A2%D0%B0%D1%88%D0%BA%D0%B5%D0%BD%D1%82">Картаны
+        ашу</a>
+    </div>
+  </section>
+
+  <section id="rsvp">
+    <div class="wrap reveal">
+      <p class="eyebrow">Жауап</p>
+      <h2 class="serif">Келетініңізді растаңыз</h2>
+      <form id="form">
+        <label class="field" for="who">Аты-жөніңіз</label>
+        <input type="text" id="who" required autocomplete="name">
+        <div style="height:16px"></div>
+        <label class="opt"><input type="radio" name="a" value="yes" checked>Иә, өзім барамын</label>
+        <label class="opt"><input type="radio" name="a" value="family">Отбасыммен келемін</label>
+        <label class="opt"><input type="radio" name="a" value="no">Өкінішке орай, келе алмаймын</label>
+        <label class="field" for="n">Қонақтар саны</label>
+        <select id="n">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+        </select>
+        <button class="btn" type="submit">Жауап жіберу</button>
+      </form>
+      <div class="thanks serif" id="thanks">
+        <div class="name" style="font-size:36px">Рахмет!</div>
+        <p class="lead" style="font-style:normal;font-family:'Cormorant Garamond',Georgia,serif">Жауабыңыз қабылданды.
+          Сізді күтеміз!</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">КЕЛУІҢІЗДІ КҮТЕМІЗ</div>
+
+  <script>
+    (function () {
+      var cover = document.getElementById("cover");
+      document.getElementById("open").addEventListener("click", function () {
+        cover.classList.add("hide");
+        document.body.classList.remove("locked");
+        window.scrollTo(0, 0);
+      });
+
+      var dust = document.getElementById("dust");
+      for (var i = 0; i < 18; i++) {
+        var p = document.createElement("i");
+        p.style.left = Math.random() * 100 + "%";
+        p.style.animationDuration = 7 + Math.random() * 9 + "s";
+        p.style.animationDelay = Math.random() * 8 + "s";
+        p.style.width = p.style.height = 2 + Math.random() * 4 + "px";
+        dust.appendChild(p);
+      }
+
+      var grid = document.getElementById("grid");
+      ["ДС", "СС", "СР", "БС", "ЖМ", "СБ", "ЖС"].forEach(function (d) {
+        var s = document.createElement("span");
+        s.className = "dow";
+        s.textContent = d;
+        grid.appendChild(s);
+      });
+      var offset = (new Date(2026, 11, 1).getDay() + 6) % 7;
+      for (var b = 0; b < offset; b++) grid.appendChild(document.createElement("span"));
+      for (var n = 1; n <= 31; n++) {
+        var c = document.createElement("span");
+        c.className = "day" + (n === 24 ? " on" : "");
+        c.textContent = n;
+        grid.appendChild(c);
+      }
+
+      var target = new Date("2026-12-24T17:00:00+05:00").getTime();
+      var ids = ["d", "h", "m", "s"].map(function (k) { return document.getElementById(k); });
+      function tick() {
+        var diff = Math.max(0, target - Date.now());
+        var v = [Math.floor(diff / 86400000), Math.floor(diff / 3600000) % 24, Math.floor(diff / 60000) % 60, Math.floor(diff / 1000) % 60];
+        ids.forEach(function (el, k) { el.textContent = v[k]; });
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      var form = document.getElementById("form");
+      var thanks = document.getElementById("thanks");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        try {
+          localStorage.setItem("rsvp", JSON.stringify({
+            who: document.getElementById("who").value,
+            a: form.elements.a.value,
+            n: document.getElementById("n").value
+          }));
+        } catch (err) { }
+        form.style.display = "none";
+        thanks.classList.add("show");
+      });
+
+      var items = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(function (el) { el.classList.add("in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+
+</html>
